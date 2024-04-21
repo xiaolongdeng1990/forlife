@@ -2,7 +2,6 @@ package flsvr
 
 import (
 	"errors"
-	"fmt"
 	"strings"
 	"time"
 
@@ -35,7 +34,7 @@ func Server(cfg string, svrHandle interface{}) error {
 		fllog.Error("serve failed. err:%+v", err)
 		return err
 	}
-	fmt.Println("start server succ")
+	// fmt.Println("start server succ")
 	fllog.Error("start server succ")
 	return nil
 }
@@ -43,11 +42,11 @@ func Server(cfg string, svrHandle interface{}) error {
 func loadSvrCfgInfo(cfg string) (string, string, string, string, error) {
 	svrCfg := SvrCfg{}
 	if err := config.ParseConfigWithPath(&svrCfg, cfg); err != nil {
-		fmt.Printf("load svr logcfg failed. err:%+v cfg:%s", err, cfg)
+		// fmt.Printf("load svr logcfg failed. err:%+v cfg:%s", err, cfg)
 		fllog.Error("load svr logcfg failed. err:%+v cfg:%s", err, cfg)
 		return "", "", "", "", err
 	}
-	fmt.Printf("svrCfg:%+v", svrCfg)
+	// fmt.Printf("svrCfg:%+v", svrCfg)
 	fllog.Debug("svrCfg:%+v", svrCfg)
 	if len(svrCfg.Server.Name) == 0 || len(svrCfg.Server.Address) == 0 {
 		return "", "", "", "", errors.New("svrcfg invalid")
@@ -74,14 +73,13 @@ func registerConuslPlugin(s *server.Server, svrAddr, conuslAddr, basePath string
 	}
 	err := r.Start()
 	if err != nil {
-		fmt.Println(err)
+		// fmt.Println(err)
 		fllog.Error("register consul failed. err:%+v", err)
 	}
 
 	s.Plugins.Add(r)
-	fmt.Println("add register succ")
+	// fmt.Println("add register succ")
 	fllog.Debug("register consul succ")
-	return
 }
 
 func parseSvrName(name string) (string, string) {

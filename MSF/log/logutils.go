@@ -1,13 +1,17 @@
 package fllog
 
 import (
+	"encoding/json"
 	"log"
 	"os"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/fatih/color"
+	orderedmap "github.com/wk8/go-ordered-map"
 	"go.uber.org/zap"
+	"go.uber.org/zap/buffer"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
@@ -129,10 +133,58 @@ func Log() *zap.SugaredLogger {
 
 func Allow(level string) bool {
 	utils := NewLogUtils()
+	if utils == nil {
+		return false
+	}
 	logLevel := utils.builders.GetLogLevel()
-	realLevel:= LogLevelMap[strings.ToLower(logLevel)]
+	realLevel := LogLevelMap[strings.ToLower(logLevel)]
 	checkLevel := LogLevelMap[strings.ToLower(level)]
 	return realLevel >= checkLevel
+}
+
+type CustomEncoder struct {
+	zapcore.Encoder
+}
+
+func (ce *CustomEncoder) EncodeEntry(ent zapcore.Entry, fields []zapcore.Field) (*buffer.Buffer, error) {
+	// 先将原始编码器的 EncodeEntry 方法调用结果存储在 buf 中
+	buf, err := ce.Encoder.EncodeEntry(ent, fields)
+	if err != nil {
+		return nil, err
+	}
+
+	// 将 buf 转换为 JSON 对象
+	var jsonObj map[string]interface{}
+	if err := json.Unmarshal(buf.Bytes(), &jsonObj); err != nil {
+		return nil, err
+	}
+
+	// 删除原始的 caller、time 和 level 字段
+	callerValue := jsonObj["caller"]
+	timeValue := jsonObj["time"]
+	levelValue := jsonObj["level"]
+	delete(jsonObj, "caller")
+	delete(jsonObj, "time")
+	delete(jsonObj, "level")
+
+	// 按照期望的顺序重新插入 caller、time 和 level 字段
+	orderedJsonObj := orderedmap.New()
+	orderedJsonObj.Set("caller", callerValue)
+	orderedJsonObj.Set("time", timeValue)
+	orderedJsonObj.Set("level", levelValue)
+	for k, v := range jsonObj {
+		orderedJsonObj.Set(k, v)
+	}
+
+	// 将重新排序后的 JSON 对象转换回 buffer.Buffer
+	orderedJsonBytes, err := json.Marshal(orderedJsonObj)
+	if err != nil {
+		return nil, err
+	}
+	buf.Reset()
+	buf.Write(orderedJsonBytes)
+
+	return buf, nil
 }
 
 func (ms *myLogUtils) Init() error {
@@ -197,20 +249,34 @@ func (ms *myLogUtils) Init() error {
 		logutils := zap.New(zapCore, zap.AddCaller()).Sugar()
 		ms.sugaredLogger = logutils
 	} else {
+
+		// 自定义时间输出格式
+		customTimeEncoder := func(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
+			enc.AppendString("[" + t.Format("2006-01-02 15:04:05") + "]")
+		}
+
+		// 自定义文件：行号输出项
+		customCallerEncoder := func(caller zapcore.EntryCaller, enc zapcore.PrimitiveArrayEncoder) {
+			enc.AppendString("[" + caller.TrimmedPath() + "]")
+		}
+
 		encoderConfig := zapcore.EncoderConfig{
-			TimeKey:        "time",
-			LevelKey:       "level",
-			NameKey:        "name",
-			CallerKey:      "line",
-			MessageKey:     "msg",
-			FunctionKey:    "func",
-			StacktraceKey:  "stacktrace",
-			LineEnding:     zapcore.DefaultLineEnding,
-			EncodeLevel:    zapcore.LowercaseLevelEncoder,
-			EncodeTime:     zapcore.TimeEncoderOfLayout("2006-01-02 15:04:05"),
+			TimeKey:    "time",
+			CallerKey:  "line",
+			LevelKey:   "level",
+			NameKey:    "name",
+			MessageKey: "msg",
+			// FunctionKey:   "func",
+			// StacktraceKey: "stacktrace",
+
+			LineEnding:  zapcore.DefaultLineEnding,
+			EncodeLevel: zapcore.LowercaseLevelEncoder,
+			// EncodeTime:     zapcore.TimeEncoderOfLayout("2006-01-02 15:04:05"),
+			EncodeTime:     customTimeEncoder,
 			EncodeDuration: zapcore.SecondsDurationEncoder,
-			EncodeCaller:   zapcore.FullCallerEncoder,
-			EncodeName:     zapcore.FullNameEncoder,
+			// EncodeCaller:   zapcore.FullCallerEncoder,
+			EncodeCaller: customCallerEncoder,
+			EncodeName:   zapcore.FullNameEncoder,
 		}
 		// 日志轮转
 		writer := &lumberjack.Logger{

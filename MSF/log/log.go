@@ -2,7 +2,6 @@ package fllog
 
 import (
 	"fmt"
-
 	"github.com/xiaolongdeng1990/forlife/MSF/config"
 )
 
@@ -18,51 +17,60 @@ type LogCfg struct {
 
 func Init(cfg string) error {
 	logCfg := LogCfg{}
+
 	if err := config.ParseConfigWithPath(&logCfg, cfg); err != nil {
 		fmt.Printf("load logcfg failed. err:%+v cfg:%s", err, cfg)
 		return err
 	}
+	fmt.Printf("cfg:%s logCfg:%+v", cfg, logCfg)
 	builder := NewLogUtilsBuilder(
 		logCfg.LogConf.Level,
 		logCfg.LogConf.Name,
 		logCfg.LogConf.MaxSize,
 		logCfg.LogConf.MaxAge,
 		logCfg.LogConf.MaxBackups,
-		true,
+		false,
 		true,
 	)
 	logUtils := NewLogUtils().SetBuilder(builder)
 	err := logUtils.Init()
 	if err != nil {
+		fmt.Printf("logUtils init failed. err:%+v", err)
 		return err
 	}
+	fmt.Printf("log init succ. cfg:%s logCfg:%+v", cfg, logCfg)
+	Debug("log init succ. cfg:%s logCfg:%+v", cfg, logCfg)
 	return nil
 }
 
 func Debug(f string, p ...interface{}) {
 	if Allow("DEBUG") {
 		msg := fmt.Sprintf(f, p...)
-		Log().Debug(msg)
+		utils := NewLogUtils()
+		utils.getLogsUtils().Debug(msg)
 	}
 }
 
 func Info(f string, p ...interface{}) {
 	if Allow("INFO") {
 		msg := fmt.Sprintf(f, p...)
-		Log().Info(msg)
+		utils := NewLogUtils()
+		utils.getLogsUtils().Info(msg)
 	}
 }
 
 func Warn(f string, p ...interface{}) {
 	if Allow("WARN") {
 		msg := fmt.Sprintf(f, p...)
-		Log().Warn(msg)
+		utils := NewLogUtils()
+		utils.getLogsUtils().Warn(msg)
 	}
 }
 
 func Error(f string, p ...interface{}) {
 	if Allow("ERROR") {
 		msg := fmt.Sprintf(f, p...)
-		Log().Error(msg)
+		utils := NewLogUtils()
+		utils.getLogsUtils().Error(msg)
 	}
 }

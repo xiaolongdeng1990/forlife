@@ -6,8 +6,8 @@ require (
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475
 	github.com/rpcxio/rpcx-consul v0.0.0-20230904043151-f6175fbe2f72
 	github.com/smallnest/rpcx v1.8.29
-	github.com/xiaolongdeng1990/forlife/MSF/config v0.0.0-20240420121952-aea7746477b6
-	github.com/xiaolongdeng1990/forlife/MSF/log v0.0.0-20240420123715-c0e6c4168f4b
+	github.com/xiaolongdeng1990/forlife/MSF/config v0.0.0-20240420130217-d648914eafdc
+	github.com/xiaolongdeng1990/forlife/MSF/log v0.0.0-20240420130217-d648914eafdc
 )
 
 require (
@@ -52,6 +52,7 @@ require (
 	github.com/smallnest/quick v0.1.0 // indirect
 	github.com/smallnest/statsview v0.0.0-20231119085602-10700f9abec4 // indirect
 	github.com/soheilhy/cmux v0.1.5 // indirect
+	github.com/stretchr/objx v0.5.0 // indirect
 	github.com/templexxx/cpufeat v0.0.0-20180724012125-cef66df7f161 // indirect
 	github.com/templexxx/xor v0.0.0-20191217153810-f85b25db303b // indirect
 	github.com/tinylib/msgp v1.1.8 // indirect
