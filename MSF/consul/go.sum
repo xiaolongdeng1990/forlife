@@ -1,0 +1,4 @@
+github.com/BurntSushi/toml v1.3.2 h1:o7IhLm0Msx3BaB+n3Ag7L8EVlByGnpq14C4YWiu/gL8=
+github.com/BurntSushi/toml v1.3.2/go.mod h1:CxXYINrC8qIiEnFrOxCa7Jy5BFHlXnUU2pbicEuybxQ=
+github.com/xiaolongdeng1990/forlife/MSF/config v0.0.0-20240423133039-064980ade61d h1:3SbENeVFX3l+lJrvIwxGJvzsKF93fkr2HB9aM105M4Y=
+github.com/xiaolongdeng1990/forlife/MSF/config v0.0.0-20240423133039-064980ade61d/go.mod h1:kdDeJ0iR+xhcdoy+5h7nxo91MwHnkTsByCtmSrpbTTI=
