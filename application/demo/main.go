@@ -32,7 +32,7 @@ func Add(ctx context.Context, args *math.Args, reply *math.Reply) error {
 
 	// client rpc demo
 	// callDesc := flcli.CallDesc{
-	// 	ServiceName: "/rpcx_test.Demo.Add",
+	// 	ServiceName: "/rpcx_test.Demo.Add", // rpcx_test = basePath; Demo = svrName; Add = 接口名
 	// 	Timeout:     time.Second,
 	// }
 	// flC := flcli.NewClient(callDesc)
@@ -54,7 +54,7 @@ func main() {
 	fllog.Log().Debug("test fllog debug cfg:", cfg)
 	// server init
 	svr := flsvr.NewFLServer(cfg)
-	svr.RegisterFunc(Mul)
+	svr.RegisterFunc(Mul) // 注册接口函数，函数名=接口名
 	svr.RegisterFunc(Add)
 	svr.StartServer()
 }
