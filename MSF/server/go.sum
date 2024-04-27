@@ -299,8 +299,10 @@ github.com/vmihailenco/msgpack/v5 v5.3.5 h1:5gO0H1iULLWGhs2H5tbAHIZTV8/cYafcFOr9
 github.com/vmihailenco/msgpack/v5 v5.3.5/go.mod h1:7xyJ9e+0+9SaZT0Wt1RGleJXzli6Q/V5KbhBonMG9jc=
 github.com/vmihailenco/tagparser/v2 v2.0.0 h1:y09buUbR+b5aycVFQs/g70pqKVZNBmxwAhO7/IwNM9g=
 github.com/vmihailenco/tagparser/v2 v2.0.0/go.mod h1:Wri+At7QHww0WTrCBeu4J6bNtoV6mEfg5OIWRZA9qds=
-github.com/xiaolongdeng1990/forlife/MSF/config v0.0.0-20240420130217-d648914eafdc h1:88lP8OsPAtfxiTk9G6c/ePBDO4/w53xweg+Sq/8n3W4=
-github.com/xiaolongdeng1990/forlife/MSF/config v0.0.0-20240420130217-d648914eafdc/go.mod h1:kdDeJ0iR+xhcdoy+5h7nxo91MwHnkTsByCtmSrpbTTI=
+github.com/xiaolongdeng1990/forlife/MSF/config v0.0.0-20240423133039-064980ade61d h1:3SbENeVFX3l+lJrvIwxGJvzsKF93fkr2HB9aM105M4Y=
+github.com/xiaolongdeng1990/forlife/MSF/config v0.0.0-20240423133039-064980ade61d/go.mod h1:kdDeJ0iR+xhcdoy+5h7nxo91MwHnkTsByCtmSrpbTTI=
+github.com/xiaolongdeng1990/forlife/MSF/consul v0.0.0-20240426124830-4efd920762d7 h1:Y0HFgazjbtAcY07TYShBWllAqrZgK8j+/qFxdOwtLsI=
+github.com/xiaolongdeng1990/forlife/MSF/consul v0.0.0-20240426124830-4efd920762d7/go.mod h1:HfTexw5pe9SsgnN2dEszbSwOoTJyV1nt/hcEh7x7XbQ=
 github.com/xiaolongdeng1990/forlife/MSF/log v0.0.0-20240420130217-d648914eafdc h1:hUN4beXvCiBQs4YLUE79c7Rzrt/RPnfF1+p8OS+QLHc=
 github.com/xiaolongdeng1990/forlife/MSF/log v0.0.0-20240420130217-d648914eafdc/go.mod h1:iV+pxTMeOJkpHjwYPOpaHVVWsbUHplIphCXELss3ddM=
 github.com/xtaci/kcp-go v5.4.20+incompatible h1:TN1uey3Raw0sTz0Fg8GkfM0uH3YwzhnZWQ1bABv5xAg=

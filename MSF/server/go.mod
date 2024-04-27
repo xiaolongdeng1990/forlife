@@ -6,7 +6,8 @@ require (
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475
 	github.com/rpcxio/rpcx-consul v0.0.0-20230904043151-f6175fbe2f72
 	github.com/smallnest/rpcx v1.8.29
-	github.com/xiaolongdeng1990/forlife/MSF/config v0.0.0-20240420130217-d648914eafdc
+	github.com/xiaolongdeng1990/forlife/MSF/config v0.0.0-20240423133039-064980ade61d
+	github.com/xiaolongdeng1990/forlife/MSF/consul v0.0.0-20240426124830-4efd920762d7
 	github.com/xiaolongdeng1990/forlife/MSF/log v0.0.0-20240420130217-d648914eafdc
 )
 
