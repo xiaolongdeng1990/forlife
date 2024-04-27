@@ -7,6 +7,8 @@ import (
 
 	fllog "github.com/xiaolongdeng1990/forlife/MSF/log"
 	flsvr "github.com/xiaolongdeng1990/forlife/MSF/server"
+
+	// flcli "github.com/xiaolongdeng1990/forlife/MSF/client"
 	math "github.com/xiaolongdeng1990/forlife/protocol/json/math"
 )
 
@@ -28,7 +30,15 @@ func Add(ctx context.Context, args *math.Args, reply *math.Reply) error {
 	reply.C = args.A + args.B
 	fllog.Log().Debug("req=", args, "reply=", reply)
 
-	// client rpc
+	// client rpc demo
+	// callDesc := flcli.CallDesc{
+	// 	ServiceName: "/rpcx_test.Demo.Add",
+	// 	Timeout:     time.Second,
+	// }
+	// flC := flcli.NewClient(callDesc)
+	// defer flC.Close()
+
+	// flC.DoRequest(context.Background(), args, reply)
 	return nil
 }
 
